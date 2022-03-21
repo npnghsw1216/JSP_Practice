@@ -30,7 +30,6 @@ public class UserDAO {
 	}
 	
 	// 로그인 기능 구현
-	// 실제로 로그인을 하게해주는 메서드
 	// 하나의 계정에 대한 로그인 시도를 해주는 메서드 
 	
 		public int login(String userID, String userPassword) {
@@ -51,5 +50,12 @@ public class UserDAO {
 				e.printStackTrace(); // 예외가 발생한 경우 해당예외를 출력
 			}
 			return -2; // 데이터 베이스 오류
+		}
+		
+	// 회원가입 기능 구현
+	// 한명의 사용자를 회원가입하게 해주는 메서드
+		
+		public int join(User user) { 
+			
 		}
 }
