@@ -28,4 +28,27 @@ public class UserDAO {
 			e.printStackTrace();
 		}
 	}
+	
+	// 실제로 로그인을 하게해주는 메서드
+	// 하나의 계정에 대한 로그인 시도를 해주는 메서드 
+	
+		public int login(String userID, String userPassword) {
+			String SQL = "SELECT userPassword FROM USER WEHRE userID = ?"; // 하나의 문장을 미리 준비해 놓았다가
+			try {
+				pstmt = conn.prepareStatement(SQL);
+				pstmt.setString(1, userID);
+				rs = pstmt.executeQuery(); // 쿼리가 실행한 결과를 넣어준다.
+				if(rs.next()) { // 결과(아이디가 있다)가 존재한다면 if문을 만나게 된다.
+					if(rs.getString(1).equals(userPassword)) { // 결과로 나온 userPassword를 받아서 접속을 시도한 userPassword와 동일하다면
+						return 1; // 로그인 성공
+					}
+					else
+						return 0; // userPassword가 서로 동일하지 않다면 return 0(비밀번호 불일치)
+				}
+				return -1; // 결과가 존재하지 않는다면 return -1(아이디가 없다)의 값을 가지게 된다.
+			} catch(Exception e) {
+				e.printStackTrace(); // 예외가 발생한 경우 해당예외를 출력
+			}
+			return -2; // 데이터 베이스 오류
+		}
 }
