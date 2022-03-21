@@ -55,7 +55,19 @@ public class UserDAO {
 	// 회원가입 기능 구현
 	// 한명의 사용자를 회원가입하게 해주는 메서드
 		
-		public int join(User user) { 
-			
+		public int join(User user) { // User 클래스를 user라는 인스턴스를 통해서 사용한다.
+			String SQL = "INSERT INTO USER VALUES (?, ?, ?, ?, ?)"; // user테이블의 속성은 5개이기때문에 5개의 값을 테이블의 넣기 위해 ?를 꼭 5개 적어야한다.
+			try {
+				pstmt = conn.prepareStatement(SQL); // 위에 SQL 쿼리문을 사용
+				pstmt.setString(1, user.getUserID()); // 위 커리문 첫 번째 ?(userID)에 들어갈 값
+				pstmt.setString(2, user.getUserPassword()); // 위 커리문 두 번째 ?(userPassword)에 들어갈 값
+				pstmt.setString(3, user.getUserName()); // 위 커리문 세 번째 ?(userName)에 들어갈 값
+				pstmt.setString(4, user.getUserGender()); // 위 커리문 네 번째 ?(userGender)에 들어갈 값
+				pstmt.setString(5, user.getUserEmail()); // 위 커리문 다섯 번째 ?(userEmail)에 들어갈 값
+				return pstmt.executeUpdate(); // 해당 statement를 실행 한 그 결과를 넣을 수 있도록 한다.
+			} catch(Exception e) {
+				e.printStackTrace();
+			}
+			return -1; // 데이터베이스에서 오류가 발생 하였을 때 return값으로 -1을 반환한다.
 		}
 }
