@@ -34,7 +34,7 @@ public class UserDAO {
 	// 하나의 계정에 대한 로그인 시도를 해주는 메서드 
 	
 		public int login(String userID, String userPassword) {
-			String SQL = "SELECT userPassword FROM USER WEHRE userID = ?"; // 하나의 문장을 미리 준비해 놓았다가
+			String SQL = "SELECT userPassword FROM USER WHERE userID = ?"; // 하나의 문장을 미리 준비해 놓았다가
 			try {
 				pstmt = conn.prepareStatement(SQL);
 				pstmt.setString(1, userID);
