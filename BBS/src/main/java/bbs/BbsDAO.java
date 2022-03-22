@@ -80,7 +80,7 @@ public class BbsDAO {
 			} catch(Exception e) {
 				e.printStackTrace();
 			}
-			return -1; // 그렇지 않을 경우(오류가 발생했을 땐) -1을 반환한다.(데이터베이스 오류)
+			return -1; // 그렇지 않을 경우(오류가 발생했을 때) -1을 반환한다.(데이터베이스 오류)
 		}
 		
 		// 게시판 글 목록 기능 구현

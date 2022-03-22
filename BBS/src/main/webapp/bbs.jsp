@@ -1,6 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ page import="java.io.PrintWriter" %>
+<%@ page import="bbs.BbsDAO" %>
+<%@ page import="bbs.Bbs" %>
+<%@ page import="java.util.ArrayList" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -16,6 +19,13 @@
 		String userID = null; 
 		if(session.getAttribute("userID") != null) { // 현재 세션이 존재하는 사람이라면 그 아이디값을 그대로 받아온다.
 			userID = (String) session.getAttribute("userID");
+		}
+		
+		// 현재 게시판이 몇 번째 페이지인지 알려주도록 하게 하는 기능
+		
+		int pageNumber = 1;
+		if(request.getParameter("pageNumber") != null){
+			pageNumber = Integer.parseInt(request.getParameter("pageNumber"));
 		}
 	%>
 	<nav class="navbar navbar-default">
@@ -78,12 +88,20 @@
 					</tr>
 				</thead>
 				<tbody>
+					<%
+						BbsDAO bbsDAO = new BbsDAO();
+						ArrayList<Bbs> list = bbsDAO.getList(pageNumber);
+						for(int i=0; i<list.size(); i++){
+					%>
 					<tr>
-						<td>1</td>
-						<td>안녕하세요.</td>
-						<td>홍길동</td>
-						<td>2017-05-04</td>
+						<td><%= list.get(i).getBbsID() %></td>
+						<td><a href="view.jsp?bbsID=<%= list.get(i).getBbsID() %>"><%= list.get(i).getBbsTitle() %></a></td>
+						<td><%= list.get(i).getUserID() %></td>
+						<td><%= list.get(i).getBbsDate().substring(0, 11) + list.get(i).getBbsDate().substring(11, 13) + "시" + list.get(i).getBbsDate().substring(14, 16) + "분" %></td>
 					</tr>
+					<% 		
+						}
+					%>
 				</tbody>
 			</table>
 			<a href="write.jsp" class="btn btn-primary pull-right">글쓰기</a>

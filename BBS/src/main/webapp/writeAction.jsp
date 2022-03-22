@@ -18,7 +18,7 @@
 	<%	
 		String userID = null;
 		if(session.getAttribute("userID") != null) { // 세션을 확인해서 userID라는 이름으로 세션id가 존재하는지 확인
-		userID = (String) session.getAttribute("userID"); // 존재하면 userID에 해당 세션 값을 넣어줄 수 있도록 한다.
+			userID = (String) session.getAttribute("userID"); // 존재하면 userID에 해당 세션 값을 넣어줄 수 있도록 한다.
 		}
 		if(userID == null) { // userID가 null값이 아닌 경우 
 			PrintWriter script = response.getWriter(); // 로그인이 되어있지 않으면, login.jsp 페이지로 이동하게 하는 경로
