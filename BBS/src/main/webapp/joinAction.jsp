@@ -19,6 +19,19 @@
 </head>
 <body>
 	<%
+		// 로그인이 이미 된 사람은 회원가입을 할 수없게 해주는 기능
+		
+		String userID = null;
+		if(session.getAttribute("userID") != null) { // 세션을 확인해서 userID라는 이름으로 세션id가 존재하는지 화긴
+		userID = (String) session.getAttribute("userID"); // 존재하면 userID에 해당 세션 값을 넣어줄 수 있도록 한다.
+		}
+		if(userID != null) { // userID가 null값이 아닌 경우 
+			PrintWriter script = response.getWriter(); // 이미 로그인이 되었다고 사용자에게 알려주고 main.jsp페이지로 이동해주는 경로
+			script.println("<script>");
+			script.println("alert('이미 로그인이 되어있습니다.')");
+			script.println("loaction.href = 'main.jsp'");
+			script.println("<script>");
+		}
 		if(user.getUserID() == null || user.getUserPassword() == null || user.getUserName() == null 
 			|| user.getUserGender() == null || user.getUserEmail() == null){ // 사용자가 회원가입할 때 의 경우의 수를 생각하고 and 연산자 || 를 이용하여 모든 경우의 수에 대한 조건 작성
 			PrintWriter script = response.getWriter();
@@ -37,6 +50,7 @@
 				script.println("</script>");
 			}
 			else { // userDAO에서의 result가 0(회원가입의 성공)이라면
+				session.setAttribute("userID", user.getUserID()); // 회원가입을 성공하였을 때 회원 ID를 가져와 세션id를 할당해준다.
 				PrintWriter script = response.getWriter();
 				script.println("<script>");
 				script.println("location.href = 'main.jsp'"); // 회원가입 성공(result==0)과 동시에 현재는 else문이어서 그냥 -1값이 아니면 다 main.jsp 메인페이지로 이동하는 경로
