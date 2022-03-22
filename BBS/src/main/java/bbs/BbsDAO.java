@@ -66,7 +66,7 @@ public class BbsDAO {
 		// 실제로 글을 쓰게 해주는 메서드
 		
 		public int write(String bbsTitle, String userID, String bbsContent) {
-			String SQL = "INSERT INTO BBS VALUE(?, ?, ?, ?, ?, ?)"; // BBS테이블 안에 총 6개의 인자가 들어갈 수 있게 해주는 쿼리문
+			String SQL = "INSERT INTO BBS VALUES (?, ?, ?, ?, ?, ?)"; // BBS테이블 안에 총 6개의 인자가 들어갈 수 있게 해주는 쿼리문
 			try {
 				PreparedStatement pstmt = conn.prepareStatement(SQL); // 현재 연결되있는 객채를 이용해서 실행 준비 단계로 만들어준다.
 				pstmt.setInt(1, getNext()); // bbs 데이터베이스 안에 값들을 넣어준다.
@@ -75,7 +75,6 @@ public class BbsDAO {
 				pstmt.setString(4, getDate());
 				pstmt.setString(5, bbsContent);
 				pstmt.setInt(6, 1);
-				rs = pstmt.executeQuery(); // 쿼리를 실행했을 때의 결과를 가져온다.
 				return pstmt.executeUpdate(); // 성공적으로 수행을 했다면 이렇게 0 이상의 결과를 반환한다.
 			} catch(Exception e) {
 				e.printStackTrace();
