@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.ArrayList;
 
 public class BbsDAO {
 	
@@ -80,5 +81,30 @@ public class BbsDAO {
 				e.printStackTrace();
 			}
 			return -1; // 그렇지 않을 경우(오류가 발생했을 땐) -1을 반환한다.(데이터베이스 오류)
+		}
+		
+		// 게시판 글 목록 기능 구현
+		
+		public ArrayList<Bbs> getList(int pageNumber) {
+			String SQL = "SELECT * FROM WHERE bbsID < ? AND bbsAvailable = 1 ORDER BY bbsID DESC LIMIT 10"; // 삭제가 되지않아 bbsAvailable의 값이 1인 값들 중 위에서 10개까지 가져오게 하는 쿼리문
+			ArrayList<Bbs> list = new ArrayList<Bbs>(); // Bbs라는 클래스에서 나오는 인스턴스를 보관할 수 있는 리스트를 만든다.
+			try {
+				PreparedStatement pstmt = conn.prepareStatement(SQL);
+				pstmt.setInt(1, getNext() - (pageNumber -1)*10);
+				rs = pstmt.executeQuery();
+				while(rs.next()) {
+					Bbs bbs = new Bbs();
+					bbs.setBbsID(rs.getInt(1));
+					bbs.setBbsTitle(rs.getString(2));
+					bbs.setUserID(rs.getString(3));
+					bbs.setBbsDate(rs.getString(4));
+					bbs.setBbsContent(rs.getString(5));
+					bbs.setBbsAvailable(rs.getInt(6));
+					list.add(bbs); // 리스트에 해당 인스턴스 반환
+				}
+			} catch(Exception e) {
+				e.printStackTrace();
+			}
+			return list;
 		}
 }
