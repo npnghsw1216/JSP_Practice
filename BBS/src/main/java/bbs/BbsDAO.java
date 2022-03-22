@@ -107,4 +107,22 @@ public class BbsDAO {
 			}
 			return list;
 		}
+		
+		// 게시글 페이징 처리 메서드
+		
+		public boolean nextPage(int pageNumber) {
+			String SQL = "SELECT * FROM WHERE bbsID < ? AND bbsAvailable = 1";
+			ArrayList<Bbs> list = new ArrayList<Bbs>(); 
+			try {
+				PreparedStatement pstmt = conn.prepareStatement(SQL);
+				pstmt.setInt(1, getNext() - (pageNumber -1)*10);
+				rs = pstmt.executeQuery();
+				if(rs.next()) { // 결과가 하나라도 존재한다면 
+					return true; // 다음 페이지로 넘어갈 수 있게 알려준다.(1페이지 -> 2페이지)
+				}
+			} catch(Exception e) {
+				e.printStackTrace();
+			}
+			return false; // 게시글 10개까지 11개 부터 true를 통해 2페이지로 이동
+		}
 }
