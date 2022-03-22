@@ -45,5 +45,22 @@ public class BbsDAO {
 		}
 		return ""; // 데이터베이스 오류(거의 오류날일이 없다. 하지만 오류가 있을 때 빈 문자열을 반환으로 오류를 알려준다.)
 	}
+	
+		// 게시글 번호설정 
+		
+		public int getNext() {
+			String SQL = "SELECT bbsID FROM BBS ORDER BY bbsID DESC"; // 내림차순을 해서 제일 마지막에 쓰인 글의 번호를 가져온다.
+			try {
+				PreparedStatement pstmt = conn.prepareStatement(SQL); // 현재 연결되있는 객채를 이용해서 실행 준비 단계로 만들어준다.
+				rs = pstmt.executeQuery(); // 쿼리를 실행했을 때의 결과를 가져온다.
+				if(rs.next()) { // 결과가 있는 경우
+					return rs.getInt(1) + 1; // 나온 결과에다가 1을 더해서 그 다음 게시글의 번호가 들어갈 수 있도록 해준다.(타입 주의)
+				}
+				return 1; // 첫 번째 게시물인 경우
+			} catch(Exception e) {
+				e.printStackTrace();
+			}
+			return -1; // 데이터베이스 오류
+		}
 
 }
