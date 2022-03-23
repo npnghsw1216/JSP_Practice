@@ -163,5 +163,19 @@ public class BbsDAO {
 				e.printStackTrace();
 			}
 			return -1; // 그렇지 않을 경우(오류가 발생했을 때) -1을 반환한다.(데이터베이스 오류)
-		}		
+		}	
+		
+		// 게시글 삭제(버튼) 기능 구현
+		
+		public int delete(int bbsID) {
+			String SQL = "UPDATE BBS SET bbsAvailable = 0 WHERE bbsID = ?"; // 글을 삭제하더라도 글에 대한 정보가 남아있을 수 있도록 bbsAvailable값만 0으로 바꾼다.
+			try {	
+				PreparedStatement pstmt = conn.prepareStatement(SQL); // 현재 연결되있는 객채를 이용해서 실행 준비 단계로 만들어준다.
+				pstmt.setInt(1, bbsID); 
+				return pstmt.executeUpdate(); // 성공적으로 수행을 했다면 이렇게 0 이상의 결과를 반환한다.
+			} catch(Exception e) {
+				e.printStackTrace();
+			}
+			return -1; // 그렇지 않을 경우(오류가 발생했을 때) -1을 반환한다.(데이터베이스 오류)
+		}	
 }
