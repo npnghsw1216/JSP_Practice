@@ -73,7 +73,26 @@
 				<h1>BBS(Bulletin Board System)</h1>
 				<p>부투스트랩을 이용한 JSP 웹 사이트! 최소한의 로직만을 이용하여 개발</p>
 				<p><a class="btn btn-primary btn-pull" href="#" role="button">자세히 알아보기</a></p>
-				
+			</div>
+		</div>
+	</div>
+	<div class="container">
+		<div id="myCarousel" class="carousel" data-ride="carousel">
+			<ol class="carousel-indicators">
+				<li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+				<li data-target="#myCarousel" data-slide-to="1"></li>
+				<li data-target="#myCarousel" data-slide-to="2"></li>
+			</ol>
+			<div class="carousel-inner">
+				<div class="item active">
+					<img src="images/1.jpg">
+				</div>
+				<div class="item">
+					<img src="images/2.jpg">
+				</div>
+				<div class="item">
+					<img src="images/3.jpg">
+				</div>
 			</div>
 		</div>
 	</div>
