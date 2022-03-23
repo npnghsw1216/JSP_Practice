@@ -26,8 +26,7 @@
 			script.println("alert('로그인을 하세요.')");
 			script.println("loaction.href = 'login.jsp'");
 			script.println("<script>");
-		}
-		else {
+		} else {
 			if(bbs.getBbsTitle() == null || bbs.getBbsContent() == null){ // 사용자가 게시글을 작성할 때 의 경우의 수를 생각하고 and 연산자 || 를 이용하여 모든 경우의 수에 대한 조건 작성
 					PrintWriter script = response.getWriter();
 					script.println("<script>");
@@ -50,8 +49,7 @@
 						script.println("location.href = 'bbs.jsp'"); // 게시글 작성 후 bbs.jsp페이지로 이동해주는 경로
 						script.println("</script>");
 					}
-		}
-		
+				}		
 		}
 	%>
 </body>

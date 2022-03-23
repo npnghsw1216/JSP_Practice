@@ -9,7 +9,6 @@ import java.util.ArrayList;
 public class BbsDAO {
 	
 	private Connection conn; // 데이터베이스에 접근하게해주는 하니의 객체
-	private PreparedStatement pstmt;
 	private ResultSet rs; // 어떠한 정보를 담을 수 있는 하나의 객체
 	
 	// Ctrl+Shift+o 로 외부 라이브러리 추가
@@ -86,7 +85,7 @@ public class BbsDAO {
 		// 게시판 글 목록 기능 구현
 		
 		public ArrayList<Bbs> getList(int pageNumber) {
-			String SQL = "SELECT * FROM WHERE bbsID < ? AND bbsAvailable = 1 ORDER BY bbsID DESC LIMIT 10"; // 삭제가 되지않아 bbsAvailable의 값이 1인 값들 중 위에서 10개까지 가져오게 하는 쿼리문
+			String SQL = "SELECT * FROM BBS WHERE bbsID < ? AND bbsAvailable = 1 ORDER BY bbsID DESC LIMIT 10"; // 삭제가 되지않아 bbsAvailable의 값이 1인 값들 중 위에서 10개까지 가져오게 하는 쿼리문
 			ArrayList<Bbs> list = new ArrayList<Bbs>(); // Bbs라는 클래스에서 나오는 인스턴스를 보관할 수 있는 리스트를 만든다.
 			try {
 				PreparedStatement pstmt = conn.prepareStatement(SQL);
@@ -111,7 +110,7 @@ public class BbsDAO {
 		// 게시글 페이징 처리 메서드
 		
 		public boolean nextPage(int pageNumber) {
-			String SQL = "SELECT * FROM WHERE bbsID < ? AND bbsAvailable = 1";
+			String SQL = "SELECT * FROM BBS WHERE bbsID < ? AND bbsAvailable = 1";
 			ArrayList<Bbs> list = new ArrayList<Bbs>(); 
 			try {
 				PreparedStatement pstmt = conn.prepareStatement(SQL);
