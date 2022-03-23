@@ -27,7 +27,7 @@
 			script.println("<script>");
 			script.println("alert('이미 로그인이 되어있습니다.')");
 			script.println("loaction.href = 'main.jsp'");
-			script.println("<script>");
+			script.println("</script>");
 		}
 		UserDAO userDAO = new UserDAO(); // userDAO라는 하나의 인스턴스 생성
 		int result = userDAO.login(user.getUserID(), user.getUserPassword()); // 로그인을 시도할 수 있도록 한다.

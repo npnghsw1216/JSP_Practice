@@ -1,11 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ page import="bbs.BbsDAO" %> 
+<%@ page import="bbs.Bbs" %> 
 <%@ page import="java.io.PrintWriter" %>
 <% request.setCharacterEncoding("UTF-8"); %>
-<jsp:useBean id="bbs" class="bbs.Bbs" scope="page" />
-<jsp:setProperty name="bbs" property="bbsTitle" />
-<jsp:setProperty name="bbs" property="bbsContent" />
 <!DOCTYPE html>
 <html>
 <head>
@@ -26,8 +24,31 @@
 			script.println("alert('로그인을 하세요.')");
 			script.println("loaction.href = 'login.jsp'");
 			script.println("</script>");
+		} 
+		// 현재 수정하고자하는 글의 번호가 들어오지 않았다면 유효하지 않다고 출력
+		
+		int bbsID = 0; 
+		if(request.getParameter("bbsID") != null) {
+			bbsID = Integer.parseInt(request.getParameter("bbsID"));
+		}
+		if(bbsID == 0){
+			PrintWriter script = response.getWriter(); 
+			script.println("<script>");
+			script.println("alert('유효하지 않은 글입니다.')");
+			script.println("loaction.href = 'bbs.jsp'"); // bbs.jsp 파일로 이동해주는 경로
+			script.println("</script>");
+		}
+		Bbs bbs = new BbsDAO().getBbs(bbsID);
+		if (!userID.equals(bbs.getUserID())) {
+			PrintWriter script = response.getWriter(); 
+			script.println("<script>");
+			script.println("alert('권한이 없습니다.')");
+			script.println("loaction.href = 'bbs.jsp'"); 
+			script.println("</script>");
 		} else {
-			if(bbs.getBbsTitle() == null || bbs.getBbsContent() == null){ // 사용자가 게시글을 작성할 때 의 경우의 수를 생각하고 and 연산자 || 를 이용하여 모든 경우의 수에 대한 조건 작성
+			// JavaBeans를 사용하지 않기 때문에 매게변수로 넘어온 값들을 체크
+			if(request.getParameter("bbsTitle") == null || request.getParameter("bbsContent") == null
+					|| request.getParameter("bbsTitle").equals("") || request.getParameter("bbsContent").equals("")){ 
 					PrintWriter script = response.getWriter();
 					script.println("<script>");
 					script.println("alert('입력이 안 된 사항이 있습니다.')");
@@ -35,11 +56,11 @@
 					script.println("</script>");
 				} else {
 					BbsDAO bbsDAO = new BbsDAO(); // bbsDAO라는 하나의 인스턴스 생성
-					int result = bbsDAO.write(bbs.getBbsTitle(), userID, bbs.getBbsContent()); // write함수를 이용하여 실제로 게시글을 작성할 수 있게 해준다.
+					int result = bbsDAO.update(bbsID, request.getParameter("bbsTitle"), request.getParameter("bbsContent")); // write함수를 이용하여 실제로 게시글을 작성할 수 있게 해준다.
 					if(result == -1){ // 데이터베이스 오류가 발생한다면.
 						PrintWriter script = response.getWriter();
 						script.println("<script>");
-						script.println("alert('글쓰기에 실패했습니다.')"); // 메세지를 출력하게 해준다.
+						script.println("alert('글 수정에 실패했습니다.')"); // 메세지를 출력하게 해준다.
 						script.println("history.back()"); // 이전 페이지로 이동하게 해준다.
 						script.println("</script>");
 					}

@@ -149,4 +149,19 @@ public class BbsDAO {
 			return null; // 해당글이 존재하지 않으면 null 반환
 		}
 		
+		// 게시물 수정(버튼) 기능 구현
+		
+		public int update(int bbsID, String bbsTitle, String bbsContent) {
+			String SQL = "UPDATE BBS SET bbsTitle =  ?, bbsContent = ? WHERE bbsID = ?"; // 특정한 bbsID에 해당하는 bbsTitle, bbsContent를 바꿔준다.
+			try {	
+				PreparedStatement pstmt = conn.prepareStatement(SQL); // 현재 연결되있는 객채를 이용해서 실행 준비 단계로 만들어준다.
+				pstmt.setString(1, bbsTitle); // bbs 데이터베이스 안에 값들을 넣어준다.
+				pstmt.setString(2, bbsContent);
+				pstmt.setInt(3, bbsID);
+				return pstmt.executeUpdate(); // 성공적으로 수행을 했다면 이렇게 0 이상의 결과를 반환한다.
+			} catch(Exception e) {
+				e.printStackTrace();
+			}
+			return -1; // 그렇지 않을 경우(오류가 발생했을 때) -1을 반환한다.(데이터베이스 오류)
+		}		
 }

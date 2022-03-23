@@ -30,7 +30,7 @@
 			script.println("<script>");
 			script.println("alert('이미 로그인이 되어있습니다.')");
 			script.println("loaction.href = 'main.jsp'");
-			script.println("<script>");
+			script.println("</script>");
 		}
 		if(user.getUserID() == null || user.getUserPassword() == null || user.getUserName() == null 
 			|| user.getUserGender() == null || user.getUserEmail() == null){ // 사용자가 회원가입할 때 의 경우의 수를 생각하고 and 연산자 || 를 이용하여 모든 경우의 수에 대한 조건 작성
