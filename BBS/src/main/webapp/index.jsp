@@ -4,6 +4,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<link rel="stylesheet" href="css/custom.css">
 <title>BBS(Bulletin Board System)</title>
 </head>
 <body>
