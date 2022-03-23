@@ -124,4 +124,29 @@ public class BbsDAO {
 			}
 			return false; // 게시글 10개까지 11개 부터 true를 통해 2페이지로 이동
 		}
+		
+		// 게시글 목록에서 각 게시글을 클릭해서 확인하게 해주는 기능 
+		
+		public Bbs getBbs(int bbsID) {
+			String SQL = "SELECT * FROM BBS WHERE bbsID = ?"; // bbsID가 특정한 숫자인 경우 어떠한 행위를 시행할 수 있도록 해주는 쿼리문
+			try {
+				PreparedStatement pstmt = conn.prepareStatement(SQL);
+				pstmt.setInt(1, bbsID);
+				rs = pstmt.executeQuery();
+				if(rs.next()) { // 결과가 하나라도 존재한다면 
+					Bbs bbs = new Bbs();
+					bbs.setBbsID(rs.getInt(1));
+					bbs.setBbsTitle(rs.getString(2));
+					bbs.setUserID(rs.getString(3));
+					bbs.setBbsDate(rs.getString(4));
+					bbs.setBbsContent(rs.getString(5));
+					bbs.setBbsAvailable(rs.getInt(6));
+					return bbs; 
+				}
+			} catch(Exception e) {
+				e.printStackTrace();
+			}
+			return null; // 해당글이 존재하지 않으면 null 반환
+		}
+		
 }
